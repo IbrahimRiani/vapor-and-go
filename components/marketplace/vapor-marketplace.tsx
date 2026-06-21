@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { marketplaceConfig } from "@/src/config/marketplace.config"
 import { useApp } from "@/src/context/AppContext"
 import { cn } from "@/lib/utils"
@@ -90,6 +91,7 @@ export default function VaporMarketplace() {
   const [filter, setFilter] = useState("Todas")
   const [scrollProgress, setScrollProgress] = useState(0)
   const { isEmpresaMode, setActiveCount } = useApp()
+  const router = useRouter()
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -259,11 +261,13 @@ export default function VaporMarketplace() {
 
                   <div className="mt-auto flex gap-3">
                     <button
+                      onClick={() => router.push(`/resumen-pedido?ref=${item.ref}&mode=${isEmpresaMode ? "empresa" : "maquinaria"}`)}
                       className="flex-1 text-[11px] sm:text-xs font-bold tracking-[0.08em] uppercase py-[10px] sm:py-[12px] lg:py-[14px] px-0 bg-[var(--vg-accent)] text-black border-2 border-[var(--vg-accent)] cursor-pointer transition-all duration-250 hover:bg-[var(--vg-bg)] hover:text-[var(--vg-text-primary)]"
                     >
                       {isEmpresaMode ? "Reservar Servicio" : "Comprar Equipo"}
                     </button>
                     <button
+                      onClick={() => router.push(`/resumen-pedido?ref=${item.ref}&mode=${isEmpresaMode ? "empresa" : "maquinaria"}`)}
                       className="flex-1 text-[11px] sm:text-xs font-bold tracking-[0.08em] uppercase py-[10px] sm:py-[12px] lg:py-[14px] px-0 bg-transparent text-[var(--vg-text-primary)] border-2 border-[var(--vg-border)] cursor-pointer transition-all duration-250 hover:border-[var(--vg-accent)] hover:text-[var(--vg-accent)]"
                     >
                       {isEmpresaMode ? "Solicitar Jornada" : "Alquilar ahora"}

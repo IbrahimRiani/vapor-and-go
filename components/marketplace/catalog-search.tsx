@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import * as THREE from "three"
 import { marketplaceConfig } from "@/src/config/marketplace.config"
 import { cn } from "@/lib/utils"
@@ -190,6 +191,7 @@ export default function CatalogSearch() {
   const [sortBy, setSortBy] = useState<"price-asc" | "price-desc" | "name">("name")
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const sidebarRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
 
   const categories = viewMode === "maquinaria" ? categoriasMaquinaria : categoriasServicios
 
@@ -560,11 +562,13 @@ export default function CatalogSearch() {
 
                     <div className="border-t-2 border-[var(--vg-border)] px-6 py-[14px] flex gap-[10px]">
                       <button
+                        onClick={() => router.push(`/resumen-pedido?ref=${item.ref}&mode=${viewMode === "servicios" ? "empresa" : "maquinaria"}`)}
                         className="flex-1 text-xs font-bold tracking-[0.06em] uppercase py-[14px] px-0 cursor-pointer transition-all duration-150 bg-[var(--vg-accent)] text-black border-2 border-black shadow-[3px_3px_0px_0px_#000000] hover:bg-[var(--vg-text-primary)] hover:text-[var(--vg-bg)] hover:shadow-[3px_3px_0px_0px_var(--vg-accent)]"
                       >
                         Reservar Servicio
                       </button>
                       <button
+                        onClick={() => router.push(`/resumen-pedido?ref=${item.ref}&mode=${viewMode === "servicios" ? "empresa" : "maquinaria"}`)}
                         className="flex-1 text-xs font-bold tracking-[0.06em] uppercase py-[14px] px-0 bg-transparent text-[var(--vg-text-primary)] border-2 border-[var(--vg-border)] cursor-pointer transition-all duration-150 hover:bg-[var(--vg-text-primary)] hover:text-[var(--vg-bg)]"
                       >
                         Contratar Servicio
