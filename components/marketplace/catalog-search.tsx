@@ -562,16 +562,16 @@ export default function CatalogSearch() {
 
                     <div className="border-t-2 border-[var(--vg-border)] px-6 py-[14px] flex gap-[10px]">
                       <button
-                        onClick={() => router.push(`/resumen-pedido?ref=${item.ref}&mode=${viewMode === "servicios" ? "empresa" : "maquinaria"}`)}
+                        onClick={() => router.push(`/resumen-pedido?ref=${item.ref}&mode=empresa&action=reservar`)}
                         className="flex-1 text-xs font-bold tracking-[0.06em] uppercase py-[14px] px-0 cursor-pointer transition-all duration-150 bg-[var(--vg-accent)] text-black border-2 border-black shadow-[3px_3px_0px_0px_#000000] hover:bg-[var(--vg-text-primary)] hover:text-[var(--vg-bg)] hover:shadow-[3px_3px_0px_0px_var(--vg-accent)]"
                       >
                         Reservar Servicio
                       </button>
                       <button
-                        onClick={() => router.push(`/resumen-pedido?ref=${item.ref}&mode=${viewMode === "servicios" ? "empresa" : "maquinaria"}`)}
+                        onClick={() => router.push(`/resumen-pedido?ref=${item.ref}&mode=empresa&action=solicitar`)}
                         className="flex-1 text-xs font-bold tracking-[0.06em] uppercase py-[14px] px-0 bg-transparent text-[var(--vg-text-primary)] border-2 border-[var(--vg-border)] cursor-pointer transition-all duration-150 hover:bg-[var(--vg-text-primary)] hover:text-[var(--vg-bg)]"
                       >
-                        Contratar Servicio
+                        Contratar Jornada
                       </button>
                     </div>
                   </div>

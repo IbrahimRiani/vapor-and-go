@@ -54,6 +54,7 @@ function ResumenContent() {
   const router = useRouter()
   const ref = searchParams.get("ref") || ""
   const mode = searchParams.get("mode") || "maquinaria"
+  const action = searchParams.get("action") || "comprar"
 
   const isEmpresa = mode === "empresa"
   const data = isEmpresa ? serviciosData : maquinariaData
@@ -72,6 +73,13 @@ function ResumenContent() {
         <Link href="/" className="text-xs font-bold text-[var(--vg-accent)] tracking-[0.06em] uppercase no-underline hover:underline">Volver al catálogo</Link>
       </div>
     )
+  }
+
+  const actionLabel: Record<string, string> = {
+    comprar: "Compra",
+    alquilar: "Alquiler",
+    reservar: "Reserva de Servicio",
+    solicitar: "Solicitud de Jornada",
   }
 
   const basePrice = item.price
@@ -97,7 +105,10 @@ function ResumenContent() {
           </div>
           <h2 className="text-2xl font-extrabold text-[var(--vg-text-primary)] mb-3 tracking-[-0.02em]">¡Simulación completada!</h2>
           <p className="text-sm font-medium text-[var(--vg-text-secondary)] mb-8 leading-[1.6]">
-            Tu pedido de <strong className="text-[var(--vg-text-primary)]">{item.name}</strong> ha sido registrado correctamente.
+            {action === "comprar" && `Tu compra de ${item.name} ha sido registrada correctamente.`}
+            {action === "alquilar" && `Tu alquiler de ${item.name} ha sido registrado correctamente.`}
+            {action === "reservar" && `Tu reserva del servicio ${item.name} ha sido registrada correctamente.`}
+            {action === "solicitar" && `Tu solicitud de jornada para ${item.name} ha sido registrada correctamente.`}
           </p>
           <Link
             href="/"
@@ -115,7 +126,8 @@ function ResumenContent() {
       <div className="max-w-[1000px] mx-auto">
         <Link href="/" className="inline-block text-xs font-semibold text-[var(--vg-text-secondary)] no-underline tracking-[0.04em] mb-8 hover:text-[var(--vg-text-primary)]">← Volver al catálogo</Link>
 
-        <h1 className="text-[clamp(1.5rem,3vw,2.5rem)] font-black tracking-[-0.03em] text-[var(--vg-text-primary)] mb-8">Resumen de pedido</h1>
+        <h1 className="text-[clamp(1.5rem,3vw,2.5rem)] font-black tracking-[-0.03em] text-[var(--vg-text-primary)] mb-1">{actionLabel[action]}</h1>
+        <p className="text-sm font-medium text-[var(--vg-text-secondary)] mb-8">Revisa los detalles antes de confirmar</p>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
           <div className="lg:col-span-3 space-y-6">
@@ -131,7 +143,27 @@ function ResumenContent() {
                 </div>
               </div>
 
-              {isEmpresa ? (
+              {(action === "alquilar" || action === "solicitar") && (
+                <div className="space-y-4 pt-5 border-t-2 border-[var(--vg-border)]">
+                  <h3 className="text-[11px] font-bold text-[var(--vg-accent)] tracking-[0.12em] uppercase">
+                    {action === "alquilar" ? "Fechas de alquiler" : "Fecha de la jornada"}
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-[10px] font-bold text-[var(--vg-text-muted)] tracking-[0.08em] uppercase block mb-2">
+                        {action === "alquilar" ? "Recogida" : "Fecha"}
+                      </label>
+                      <input type="date" value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)} className="w-full px-4 py-[12px] bg-[var(--vg-bg)] border-2 border-[var(--vg-border)] text-[var(--vg-text-primary)] text-sm font-medium outline-none transition-colors duration-200 focus:border-[#FFDE00]" />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-bold text-[var(--vg-text-muted)] tracking-[0.08em] uppercase block mb-2">Devolución</label>
+                      <input type="date" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} className="w-full px-4 py-[12px] bg-[var(--vg-bg)] border-2 border-[var(--vg-border)] text-[var(--vg-text-primary)] text-sm font-medium outline-none transition-colors duration-200 focus:border-[#FFDE00]" />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {(action === "reservar" || action === "solicitar") && (
                 <div className="space-y-4 pt-5 border-t-2 border-[var(--vg-border)]">
                   <h3 className="text-[11px] font-bold text-[var(--vg-accent)] tracking-[0.12em] uppercase">Condiciones del servicio</h3>
                   <div className="grid grid-cols-2 gap-4 text-sm">
@@ -149,18 +181,20 @@ function ResumenContent() {
                     />
                   </div>
                 </div>
-              ) : (
+              )}
+
+              {action === "comprar" && (
                 <div className="space-y-4 pt-5 border-t-2 border-[var(--vg-border)]">
-                  <h3 className="text-[11px] font-bold text-[var(--vg-accent)] tracking-[0.12em] uppercase">Fechas de alquiler</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-[10px] font-bold text-[var(--vg-text-muted)] tracking-[0.08em] uppercase block mb-2">Recogida</label>
-                      <input type="date" value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)} className="w-full px-4 py-[12px] bg-[var(--vg-bg)] border-2 border-[var(--vg-border)] text-[var(--vg-text-primary)] text-sm font-medium outline-none transition-colors duration-200 focus:border-[#FFDE00]" />
-                    </div>
-                    <div>
-                      <label className="text-[10px] font-bold text-[var(--vg-text-muted)] tracking-[0.08em] uppercase block mb-2">Devolución</label>
-                      <input type="date" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} className="w-full px-4 py-[12px] bg-[var(--vg-bg)] border-2 border-[var(--vg-border)] text-[var(--vg-text-primary)] text-sm font-medium outline-none transition-colors duration-200 focus:border-[#FFDE00]" />
-                    </div>
+                  <h3 className="text-[11px] font-bold text-[var(--vg-accent)] tracking-[0.12em] uppercase">Entrega</h3>
+                  <div className="pt-3">
+                    <label className="text-[10px] font-bold text-[var(--vg-text-muted)] tracking-[0.08em] uppercase block mb-2">Dirección de envío</label>
+                    <input
+                      type="text"
+                      value={direccion}
+                      onChange={(e) => setDireccion(e.target.value)}
+                      placeholder="Calle, número, ciudad, código postal"
+                      className="w-full px-4 py-[12px] bg-[var(--vg-bg)] border-2 border-[var(--vg-border)] text-[var(--vg-text-primary)] text-sm font-medium outline-none transition-colors duration-200 focus:border-[#FFDE00]"
+                    />
                   </div>
                 </div>
               )}
