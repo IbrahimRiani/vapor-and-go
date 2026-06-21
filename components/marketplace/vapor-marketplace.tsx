@@ -201,11 +201,11 @@ export default function VaporMarketplace() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-7">
           {filtered.map((item, idx) => (
             <AnimatedReveal key={item.ref} delay={Math.min(idx * 60, 400)} threshold={0.04}>
               <div className="product-card bg-[var(--vg-bg-card)] border-2 border-[var(--vg-border)] overflow-hidden relative flex flex-col">
-                <div className="relative w-full h-[220px] overflow-hidden bg-[var(--vg-bg)]">
+                <div className="relative w-full h-[140px] sm:h-[180px] lg:h-[220px] overflow-hidden bg-[var(--vg-bg)]">
                   <img
                     src={item.imageUrl}
                     alt={item.name}
@@ -225,19 +225,19 @@ export default function VaporMarketplace() {
                   </span>
                 </div>
 
-                <div className="p-6 pb-5 flex-1 flex flex-col">
+                <div className="p-4 pb-4 sm:p-5 sm:pb-5 lg:p-6 lg:pb-5 flex-1 flex flex-col">
                   <div className="text-[11px] font-bold text-[var(--vg-accent)] tracking-[0.12em] uppercase mb-2">
                     {item.ref}
                   </div>
 
-                  <h3 className="text-xl font-extrabold text-[var(--vg-text-primary)] my-0 mb-3 tracking-[-0.02em] leading-[1.2]">
+                  <h3 className="text-sm sm:text-lg lg:text-xl font-extrabold text-[var(--vg-text-primary)] my-0 mb-3 tracking-[-0.02em] leading-[1.2]">
                     {item.name}
                   </h3>
 
                   <div className="flex gap-4 mb-5 flex-wrap">
                     <div>
                       <div className="text-[9px] font-bold text-[var(--vg-text-muted)] tracking-[0.1em] uppercase mb-[2px]">Precio</div>
-                      <div className="text-[26px] font-black text-[var(--vg-text-primary)] tracking-[-0.02em] leading-none">
+                      <div className="text-lg sm:text-xl lg:text-[26px] font-black text-[var(--vg-text-primary)] tracking-[-0.02em] leading-none">
                         {formatPrice(item.price)}
                       </div>
                       <div className="text-[11px] font-medium text-[var(--vg-text-muted)] mt-[2px]">
@@ -259,12 +259,12 @@ export default function VaporMarketplace() {
 
                   <div className="mt-auto flex gap-3">
                     <button
-                      className="flex-1 text-xs font-bold tracking-[0.08em] uppercase py-[14px] px-0 bg-[var(--vg-accent)] text-black border-2 border-[var(--vg-accent)] cursor-pointer transition-all duration-250 hover:bg-[var(--vg-bg)] hover:text-[var(--vg-text-primary)]"
+                      className="flex-1 text-[11px] sm:text-xs font-bold tracking-[0.08em] uppercase py-[10px] sm:py-[12px] lg:py-[14px] px-0 bg-[var(--vg-accent)] text-black border-2 border-[var(--vg-accent)] cursor-pointer transition-all duration-250 hover:bg-[var(--vg-bg)] hover:text-[var(--vg-text-primary)]"
                     >
                       {isEmpresaMode ? "Reservar Servicio" : "Comprar Equipo"}
                     </button>
                     <button
-                      className="flex-1 text-xs font-bold tracking-[0.08em] uppercase py-[14px] px-0 bg-transparent text-[var(--vg-text-primary)] border-2 border-[var(--vg-border)] cursor-pointer transition-all duration-250 hover:border-[var(--vg-accent)] hover:text-[var(--vg-accent)]"
+                      className="flex-1 text-[11px] sm:text-xs font-bold tracking-[0.08em] uppercase py-[10px] sm:py-[12px] lg:py-[14px] px-0 bg-transparent text-[var(--vg-text-primary)] border-2 border-[var(--vg-border)] cursor-pointer transition-all duration-250 hover:border-[var(--vg-accent)] hover:text-[var(--vg-accent)]"
                     >
                       {isEmpresaMode ? "Solicitar Jornada" : "Alquilar ahora"}
                     </button>
