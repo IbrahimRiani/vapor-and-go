@@ -17,6 +17,7 @@ type AuthContextType = {
   setViewMode: (mode: ViewMode) => void;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signUp: (email: string, password: string, meta?: AuthMeta) => Promise<{ error: Error | null }>;
+  signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
 };
 
@@ -92,8 +93,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await supabase.auth.signOut();
   }, [getSupabase]);
 
+  const signInWithGoogle = useCallback(async () => {
+    const supabase = getSupabase();
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: `${window.location.origin}/mi-cuenta` },
+    });
+  }, [getSupabase]);
+
   return (
-    <AuthContext.Provider value={{ user, session, loading, viewMode, setViewMode, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ user, session, loading, viewMode, setViewMode, signIn, signUp, signInWithGoogle, signOut }}>
       {children}
     </AuthContext.Provider>
   );
